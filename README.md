@@ -85,6 +85,27 @@ end
 
 Searchkick supports the complete [Elasticsearch Search API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html). As your search becomes more advanced, we recommend you use the [Elasticsearch DSL](#advanced) for maximum flexibility.
 
+### To use a client with different configuration, just set up a client for the model:
+
+Currently, the Searchkick can work with a single ES cluster only. Having ability to use separate ES clusters per AR model could be helpful for gradual migration between ES clusters.
+
+In order to use custom client:
+
+ 1. Define client in the initializer
+ 
+```rb
+Searchkick.add_client :custom_client, url: 'https://user:pass@example.com/'
+```
+ 
+ 2. Configure model to use custom client
+ 
+```rb
+class MyModel < ApplicationRecord
+  searchkick client_name: :custom_client
+end
+```
+
+
 ## Querying
 
 Query like SQL
